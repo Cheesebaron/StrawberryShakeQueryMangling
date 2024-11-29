@@ -1,0 +1,164 @@
+query ActivityList($take: Int, $skip: Int, $activityKinds: [ActivityKind!], $includeHidden : Boolean) {
+  me {
+    activities (take: $take, skip: $skip, kinds: $activityKinds, includeHidden: $includeHidden)
+    {
+      items {
+        kind
+        ... ActivityListCoursePlay
+        ... ActivityListRangeBullsEye
+        ... ActivityListRangeHitIt
+        ... ActivityListRangeCaptureTheFlag
+        ... ActivityListRangePractice
+        ... ActivityListRangeFMD
+        ... ActivityListCombine
+        ... ActivityListTest
+        ... ActivityListScreenCast
+        ... ActivityListShotAnalysis
+        ... ActivityListVirtualRange
+        ... ActivityListSession
+        ... ActivityListPerformanceCenter
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+      }
+      totalCount
+    }
+  }
+}
+
+fragment ActivityListCommon on PlayerActivity
+{
+  id
+  kind
+  time
+}
+
+fragment ActivityListSession on SessionActivity
+{
+  ... ActivityListCommon
+  strokeCount
+}
+
+fragment ActivityListCoursePlay on CoursePlayActivity
+{
+  ... ActivityListCommon
+  course {
+    displayName
+    image {
+      url
+    }
+  }
+
+  tournament {
+    backgroundImage
+    mediaAssets {
+      isDefault
+      kind
+      url
+    }
+  }
+
+  gameSettings {
+    gamePlay
+    gameScore
+  }
+
+  isInTournament
+  toPar
+  stablefordPoints
+  grossScore
+  skinsScore
+  matchScore
+
+  scorecard {
+    kind
+  }
+  state
+}
+
+fragment ActivityListRangeBullsEye on RangeBullsEyeActivity {
+  ... ActivityListCommon
+  youWon
+  youPlaced
+  didEndInTie
+}
+
+fragment ActivityListRangeHitIt on RangeHitItActivity {
+  ... ActivityListCommon
+  youWon
+  youPlaced
+  didEndInTie
+}
+
+fragment ActivityListRangeCaptureTheFlag on RangeCaptureTheFlagActivity {
+  ... ActivityListCommon
+  youWon
+  youPlaced
+  didEndInTie
+}
+
+fragment ActivityListRangePractice on RangePracticeActivity {
+  ... ActivityListCommon
+  numberOfStrokes
+  siteMetadata {
+    courseName
+    splash {
+      image {
+        uri
+      }
+    }
+  }
+}
+
+fragment ActivityListRangeFMD on RangeFindMyDistanceActivity {
+  ... ActivityListCommon
+  numberOfStrokes
+  siteMetadata {
+    courseName
+    splash {
+      image {
+        uri
+      }
+    }
+  }
+}
+
+fragment ActivityListCombine on CombineTestActivity {
+  ... ActivityListCommon
+  score
+}
+
+fragment ActivityListTest on TestActivity {
+  ... ActivityListCommon
+  avgScore,
+  dynamicReportPath,
+  name
+}
+
+fragment ActivityListScreenCast on ScreencastActivity
+{
+  ... ActivityListCommon
+  videoUrl
+  thumbnailUrl
+  subject
+}
+
+fragment ActivityListShotAnalysis on ShotAnalysisSessionActivity
+{
+  ... ActivityListCommon
+  strokeCount
+}
+
+fragment ActivityListVirtualRange on VirtualRangeSessionActivity
+{
+  ... ActivityListCommon
+  strokeCount
+}
+
+fragment ActivityListPerformanceCenter on PerformanceCenterActivity
+{
+  ... ActivityListCommon
+  averageStrokesGained
+  strokes: strokeCount
+}

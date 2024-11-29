@@ -1,0 +1,28 @@
+{
+  "schema": "schema.graphql",
+  "documents": "**/*.graphql",
+  "extensions": {
+    "endpoints": {
+      "default": {
+        "url": "https://api.trackmangolf.com/graphql/"
+      }
+    },
+    "strawberryShake": {
+      "name": "GraphQlClient",
+      "namespace": "TrackMan.Api.Gql",
+      "dependencyInjection": true,
+      "useSingleFile": false,
+      "url": "https://api.trackmangolf.com/graphql/",
+      "records": {
+        "inputs": true,
+        "entities": true
+      },
+      "transportProfiles": [
+        {
+          "default": "Http",
+          "subscription": "WebSocket"
+        }
+      ]
+    }
+  }
+}
